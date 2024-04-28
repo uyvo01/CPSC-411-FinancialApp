@@ -1,1 +1,16 @@
-
+[
+  {
+    "name": "Insurance", 
+    "amount": 150.80, 
+    "serialNumber": "401", 
+    "colorPrimary": "OrangePrimary", 
+    "colorSecondary": "OrangeSecondary"
+  },
+  {
+    "name": "Tax", 
+    "amount": 1,250,
+    "serialNumber": "402", 
+    "colorPrimary": "BluePrimary", 
+    "colorSecondary": "BlueSecondary"
+  }
+]
