@@ -1,1 +1,1 @@
-[{"id":"101","name":"Salary"},{"id":"102","name":"Investment"},{"id":"103","name":"Interest"}]
+[{"id":"101","name":"Salary","amount":12500},{"id":"102","name":"Investment","amount":2500},{"id":"103","name":"Interest"."amount":150}]
