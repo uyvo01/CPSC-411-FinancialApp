@@ -1,1 +1,1 @@
-[{"id":"101","name":"Salary","amount":12500,"type":"income"},{"id":"102","name":"Investment","amount":2500,"type":"income"},{"id":"401","name":"Tax","amount":2200,"type":"expense"},{"id":"402","name":"Insurance","amount":1500,"type":"expense"}]]
+[{"id":"101","name":"Salary","amount":12500,"type":"income"},{"id":"102","name":"Investment","amount":2500,"type":"income"},{"id":"401","name":"Tax","amount":2200,"type":"expense"},{"id":"402","name":"Insurance","amount":1500,"type":"expense"}]
