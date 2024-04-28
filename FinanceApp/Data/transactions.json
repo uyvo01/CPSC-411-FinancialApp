@@ -1,26 +1,6 @@
 [
   {
     "id": "101", 
-    "name": "Salary", 
-    "amount": 12500,
-    "colorPrimary": "OrangePrimary", 
-    "colorSecondary": "OrangeSecondary",
-    "type": "income"
-  },
-  {
-    "id": "102", 
-    "name": "Investment", 
-    "amount": 1200,
-    "colorPrimary": "OrangePrimary", 
-    "colorSecondary": "OrangeSecondary",
-    "type": "income"
-  },
-  {
-    "id": "401", 
-    "name": "Tax", 
-    "amount": 2300,
-    "colorPrimary": "BluePrimary", 
-    "colorSecondary": "BlueSecondary",
-    "type": "income"
+    "name": "Salary"
   }
 ]
