@@ -23,7 +23,7 @@
     "name": "Tax", 
     "amount": 2300,
     "colorPrimary": "BluePrimary", 
-    "colorSecondary": "BlueSecondary"
+    "colorSecondary": "BlueSecondary",
     "type": "income"
   }
 ]
