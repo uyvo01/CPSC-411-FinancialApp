@@ -1,16 +1,29 @@
 [
   {
-    "name": "Insurance", 
-    "amount": 150.80, 
-    "serialNumber": "401", 
+    "id": "101", 
+    "date": "04/28/2024", 
+    "name": "Salary", 
+    "amount": 12500,
     "colorPrimary": "OrangePrimary", 
-    "colorSecondary": "OrangeSecondary"
+    "colorSecondary": "OrangeSecondary",
+    "type": "income"
   },
   {
+    "id": "102", 
+    "date": "04/28/2024", 
+    "name": "Investment", 
+    "amount": 1200,
+    "colorPrimary": "OrangePrimary", 
+    "colorSecondary": "OrangeSecondary",
+    "type": "income"
+  },
+  {
+    "id": "401", 
+    "date": "04/28/2024", 
     "name": "Tax", 
-    "amount": 1,250,
-    "serialNumber": "402", 
+    "amount": 2300,
     "colorPrimary": "BluePrimary", 
     "colorSecondary": "BlueSecondary"
+    "type": "income"
   }
 ]
