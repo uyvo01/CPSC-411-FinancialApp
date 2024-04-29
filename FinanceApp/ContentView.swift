@@ -8,22 +8,25 @@
 import SwiftUI
 
 struct ContentView: View {
+    @StateObject var transaction = TransactionManager()
+    //@EnvironmentObject var transaction : TransactionManager
+    
     var body: some View {
-        
+
         NavigationStack {
             ZStack {
                 TabView {
-                    Text("Home")
+                    Dashboard()
                         .tabItem {
                             Image(systemName: "house")
                         }
-                    Text("Options")
+                    IncomeDetail()
                         .tabItem {
-                            Image(systemName: "folder.fill")
+                            Image(systemName: "plus")
                         }
-                    StatisticScreen()
+                    ExpensesDetail()
                         .tabItem {
-                            Image(systemName: "slider.horizontal.3")
+                            Image(systemName: "minus")
                         }
                     Text("Settings")
                         .tabItem {
@@ -35,19 +38,21 @@ struct ContentView: View {
             }
             .toolbar {
                 ToolbarItem(placement: .principal) {
-                    Text("Statistics")
+                    Text("My Finance")
                         .font(.title2)
                         .fontWeight(.bold)
+                        .padding(.bottom,0)
                 }
                                 
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Image(systemName: "ellipsis")
                         .font(.system(size: 20))
                         .rotationEffect(.degrees(-90))
+                        .padding(.bottom,0)
                 }
             }
         }
-        
+        .environmentObject(transaction)
     }
 }
 

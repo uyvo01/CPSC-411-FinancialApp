@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-struct ExpensesDetail: View {
+struct IncomeDetail: View {
     @EnvironmentObject var transaction: TransactionManager
-   
+    
     var body: some View {
         // Top Filter scrollview
         VStack {
@@ -22,13 +22,13 @@ struct ExpensesDetail: View {
             }
             .frame(height: 50)
             .padding(.bottom, 5)
-           
+            
             // Templetes section
-           
+            
             VStack(alignment: .leading) {
-                    
+                
                 HStack(alignment: .firstTextBaseline) {
-                    Text("Expense detail")
+                    Text("Income detail")
                         .font(.title2)
                         .fontWeight(.bold)
                 }
@@ -38,11 +38,11 @@ struct ExpensesDetail: View {
             
             ScrollView(.vertical, showsIndicators: false) {
                 VStack {
-                    ForEach(transaction.expenses, id: \.id) {
-                        expense in
+                    ForEach(transaction.incomes, id: \.id) {
+                        income in
                         VStack {
                             HStack(alignment: .center){
-                                Text(expense.date)
+                                Text(income.date)
                                     .font(.subheadline)
                                     .foregroundColor(.red)
                                     .fontWeight(.bold)
@@ -50,10 +50,11 @@ struct ExpensesDetail: View {
                             .padding(.bottom, 0)
                             
                             HStack {
-                                Text(expense.name)
+                                Text(income.name)
                                     .fontWeight(.bold)
-                                    
-                                Text(expense.amount, format: .currency(code: Locale.current.currency?.identifier ?? "USD"))
+                                
+                                Text(income.amount, format: .currency(code: Locale.current.currency?.identifier ?? "USD"))
+                                //Text(String(income.amount))
                                     .fontWeight(.bold)
                             }
                             .padding(.vertical, 10)
@@ -74,9 +75,9 @@ struct ExpensesDetail: View {
             }
             .padding(.leading, 0)
             .frame(maxWidth: .infinity)
-            // Button add expense
-            NavigationLink(destination: AddExpense()) {
-                Text("Add expense")
+            // Button add income
+            NavigationLink(destination: AddIncome()) {
+                Text("Add income")
                     .bold()
                     .modifier(ButtonDesign())
             }
@@ -86,8 +87,8 @@ struct ExpensesDetail: View {
     }
 }
 
-struct ExpensesDetail_Previews: PreviewProvider {
+struct IncomeDetail_Previews: PreviewProvider {
     static var previews: some View {
-        ExpensesDetail()
+        IncomeDetail()
     }
 }
