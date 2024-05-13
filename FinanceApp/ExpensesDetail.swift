@@ -8,41 +8,46 @@
 import SwiftUI
 
 struct ExpensesDetail: View {
-    @EnvironmentObject var transaction: TransactionManager
-   
+    @EnvironmentObject var t: TransactionManager
+    
     var body: some View {
         // Top Filter scrollview
         VStack {
-            ScrollView(.horizontal, showsIndicators: false) {
-                LazyHStack {
-                    ForEach(filters, id: \.self) { item in
-                        FilterView(title: item)
-                    }
-                }
+            VStack(alignment: .center){
+                Text("Finanace App")
+                    .font(.title)
+                    .fontWeight(.bold)
+                Divider()
+
             }
-            .frame(height: 50)
-            .padding(.bottom, 5)
-           
-            // Templetes section
-           
             VStack(alignment: .leading) {
-                    
+                
                 HStack(alignment: .firstTextBaseline) {
-                    Text("Expense detail")
+                    Text("Expenses detail")
                         .font(.title2)
                         .fontWeight(.bold)
                 }
+            }.padding(.bottom,0)
+            //Pie Chart Section
+            ZStack(alignment: .center) {
+                
+                if #available(iOS 17.0, *) {
+                    CircularExpenseDetail()
+                        .frame(width: 200, height: 200)
+                } else {
+                    // Fallback on earlier versions
+                    Text("support by iOS 17.0")
+                }
             }
-            
-            //Scroll templete
-            
-            ScrollView(.vertical, showsIndicators: false) {
-                VStack {
-                    ForEach(transaction.expenses, id: \.id) {
+            VStack {
+                EditButton()
+                    
+                List {
+                    ForEach(t.expenses, id: \.id) {
                         expense in
-                        VStack {
-                            HStack(alignment: .center){
-                                Text(expense.date)
+                        VStack(alignment: .leading) {
+                            HStack(alignment: .top){
+                                Text("\(expense.date.formatted(.dateTime.month().day().year()))")
                                     .font(.subheadline)
                                     .foregroundColor(.red)
                                     .fontWeight(.bold)
@@ -50,31 +55,41 @@ struct ExpensesDetail: View {
                             .padding(.bottom, 0)
                             
                             HStack {
+                                Text("Category: ")
+                                    .font(.system(size:14))
+                                Text(expense.category)
+                                    .fontWeight(.bold)
+                                    .font(.system(size:14))
+                            }
+                            HStack {
                                 Text(expense.name)
                                     .fontWeight(.bold)
-                                    
+                                    .font(.system(size:14))
                                 Text(expense.amount, format: .currency(code: Locale.current.currency?.identifier ?? "USD"))
-                                    .fontWeight(.bold)
+                                    .font(.system(size:14))
+                                    .fontWeight(.regular)
+                                Spacer()
                             }
-                            .padding(.vertical, 10)
-                            .padding(.horizontal, 7)
-                            .background(Color("OrangePrimary"))
-                            .cornerRadius(10)
                             
                         }
-                        .padding(5)
-                        .background(Color("BlueSecondary"))
-                        .cornerRadius(15)
                         .frame(
                             maxWidth: .infinity,
                             alignment: .topLeading
                         )
-                    }.frame(maxWidth: .infinity)
-                }.frame(maxWidth: .infinity)
+                    }.onDelete {
+                        offset in
+                        t.expenses.remove(atOffsets: offset)
+                    }
+                    .onMove {
+                        offset, index in
+                        t.expenses.move(fromOffsets: offset,
+                                       toOffset: index)
+                    }
+                }
             }
-            .padding(.leading, 0)
-            .frame(maxWidth: .infinity)
-            // Button add expense
+            .padding(.top)
+            
+            // Button add income
             NavigationLink(destination: AddExpense()) {
                 Text("Add expense")
                     .bold()
@@ -82,12 +97,11 @@ struct ExpensesDetail: View {
             }
             Spacer()
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
     }
 }
 
-struct ExpensesDetail_Previews: PreviewProvider {
+struct ExpensesDetailDetail_Previews: PreviewProvider {
     static var previews: some View {
-        ExpensesDetail()
+        IncomeDetail()
     }
 }

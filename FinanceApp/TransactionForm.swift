@@ -8,23 +8,26 @@
 import SwiftUI
 
 struct AddIncome: View {
-    @SceneStorage("incomeName") var incomeName: String = ""
-    @SceneStorage("incomeAmount") var incomeAmount: String = ""
-    @SceneStorage("incomeDate") var incomeDate: String = ""
-    @SceneStorage("incomeType") var incomeType: String = "income"
+    @State var incomeName: String = ""
+    @State var incomeAmount: String = ""
+    @State var incomeType: String = "income"
+    @State var category : String = ""
+    @State var categorys = ["Wage","Investment","Sale","Others"]
+    
     @State var message: String = ""
+    @State var transdate = Date()
     
     @EnvironmentObject var transaction: TransactionManager
     var body: some View {
-        // TODO: (Model 3) Surround the entire VStack with a NavigationView
+       
         NavigationView {
             /* Enclosed root VStack */
 
             /* Model 3 start of code block */
             VStack {
                 Text("Add New Income")
-                    .font(.headline)
-                    .modifier(TitleText())
+                    .font(.title2)
+                    .fontWeight(.bold)
                 VStack {
                     HStack {
                         Text("Name:")
@@ -33,6 +36,7 @@ struct AddIncome: View {
                             .modifier(TextBox())
                         Spacer()
                     }
+                    
                     HStack {
                         Text("Amount:")
                             .modifier(TextLabel())
@@ -41,25 +45,44 @@ struct AddIncome: View {
                         Spacer()
                     }
                     HStack {
-                        Text("Date:")
+                        Text("Category: ")
                             .modifier(TextLabel())
-                        TextField("Date", text:$incomeDate)
-                            .modifier(TextBox())
+                        Picker("Category", selection: $category) {
+                            ForEach(categorys, id: \.self) {
+                                Text($0).tag($0)
+                             }
+                        }
+                        .modifier(TextBox())
                         Spacer()
                     }
+                    HStack {
+                        Text("Select date:")
+                            .modifier(TextLabel())
+                        DatePicker(
+                            "",
+                            selection: $transdate,
+                            in: ...Date(),
+                            displayedComponents: [.date]
+                        )
+                        .datePickerStyle(.automatic)
+                        .modifier(TextBox())
+                        Spacer()
+                    }
+                    
                 }
                 .modifier(RoundedBackground())
-                .padding(.bottom, 30)
+                
             
                 // Insert Add Income button code below
-                HStack {
+                VStack (alignment: .center){
                     
                     Button(action: {
                         if let validAmount = Double(incomeAmount) {
-                            transaction.incomes.append(Transac(name: incomeName, amount: validAmount, type: incomeType, date:incomeDate))
+                            transaction.incomes.append(Transaction(category: category, name: incomeName, amount: validAmount, type: incomeType,  date:transdate))
                             message = " New income added!"
                         } else {
                             message = " does not have a valid amount!"
+                            
                         }
                         
                     }) {
@@ -79,23 +102,25 @@ struct AddIncome: View {
     }
 }
 struct AddExpense: View {
-    @SceneStorage("expenseName") var expenseName: String = ""
-    @SceneStorage("expenseAmount") var expenseAmount: String = ""
-    @SceneStorage("expenseDate") var expenseDate: String = ""
-    @SceneStorage("expenseType") var expenseType: String = "expense"
-    @State var message: String = ""
+    @State var expenseName: String = ""
+    @State var expenseAmount: String = ""
+    @State var category: String = ""
+    @State var expenseType: String = "expense"
+    let categorys = ["Insuarance", "Tax","Restaurant", "Shopping", "Others"]
     
+    @State var message: String = ""
+    @State var transdate = Date()
     @EnvironmentObject var transaction: TransactionManager
     var body: some View {
-        // TODO: Surround the entire VStack with a NavigationView
+       
         NavigationView {
             /* Enclosed root VStack */
 
             /* Model 3 start of code block */
             VStack {
-                Text("Add Expense")
-                    .font(.headline)
-                    .modifier(TitleText())
+                Text("Add New Expense")
+                    .font(.title2)
+                    .fontWeight(.bold)
                 VStack {
                     HStack {
                         Text("Name:")
@@ -112,25 +137,44 @@ struct AddExpense: View {
                         Spacer()
                     }
                     HStack {
-                        Text("Date:")
+                        Text("Category: ")
                             .modifier(TextLabel())
-                        TextField("Date", text:$expenseDate)
-                            .modifier(TextBox())
+                        Picker("Category", selection: $category) {
+                            ForEach(categorys, id: \.self) {
+                                Text($0)
+                            }
+                        }
+                        .modifier(TextBox())
                         Spacer()
                     }
+                    HStack {
+                        Text("Select date:")
+                            .modifier(TextLabel())
+                        DatePicker(
+                            "",
+                            selection: $transdate,
+                            in: ...Date(),
+                            displayedComponents: [.date]
+                        )
+                        .datePickerStyle(.automatic)
+                        .modifier(TextBox())
+                        Spacer()
+                    }
+                    
                 }
                 .modifier(RoundedBackground())
-                .padding(.bottom, 30)
+                
             
                 // Insert Add Income button code below
-                HStack {
+                VStack (alignment: .center){
                     
                     Button(action: {
                         if let validAmount = Double(expenseAmount) {
-                            transaction.expenses.append(Transac(name: expenseName, amount: validAmount, type: expenseType, date:expenseDate))
+                            transaction.expenses.append(Transaction(category: category, name: expenseName, amount: validAmount, type: expenseType, date:transdate))
                             message = " New expense added!"
                         } else {
                             message = " does not have a valid amount!"
+                            
                         }
                         
                     }) {
@@ -142,7 +186,6 @@ struct AddExpense: View {
                     Spacer()
                     
                 }
-                .padding(.bottom, 30)
                 Report(message: $message)
             }
         }

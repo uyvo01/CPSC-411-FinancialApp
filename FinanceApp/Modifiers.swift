@@ -19,7 +19,7 @@ struct TextEntry: ViewModifier {
 struct TextLabel: ViewModifier {
     func body(content: Content) -> some View {
         content
-            .frame(width: 80, alignment: .trailing)
+            .frame(width: 100, alignment: .trailing)
             .padding(.leading, 10)
             .foregroundColor(Color.white)
     }
@@ -28,7 +28,7 @@ struct TextLabel: ViewModifier {
 struct TextBox: ViewModifier {
     func body(content: Content) -> some View {
         content
-            .frame(width: 250, alignment: .trailing)
+            .frame(width: 200, height:30, alignment: .leading)
             .padding(.leading, 5)
             .background(Color.white)
     }

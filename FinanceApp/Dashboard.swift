@@ -7,14 +7,22 @@
 
 import SwiftUI
 
+@available(iOS 17.0, *)
 struct Dashboard: View {
     @EnvironmentObject var transaction: TransactionManager
     
     var body: some View {
         
-        // Top Filter scrollview
+        
         VStack {
-            
+            VStack(alignment: .center){
+                Text("Finanace App")
+                    .font(.title)
+                    .fontWeight(.bold)
+                Divider()
+
+            }
+           /*
             ScrollView(.horizontal, showsIndicators: false) {
                 LazyHStack {
                     ForEach(filters, id: \.self) { item in
@@ -24,25 +32,29 @@ struct Dashboard: View {
             }
             .frame(height: 50)
             .padding(.bottom, 5)
-            
+            */
+            VStack{
+                Text("Expenses")
+                Text(transaction.expenses.map{$0.amount}.reduce(0, +), format: .currency(code: Locale.current.currency?.identifier ?? "USD"))
+                //Text(String(transaction.incomes.map{$0.amount}.reduce(0, +)))
+                    .fontWeight(.bold)
+            }
             //Pie Chart Section
             ZStack(alignment: .center) {
+                
                 CircularProgressView()
                     .frame(width: 200, height: 200)
                 //Middle Text
-                
                 VStack{
-                    Text("Income")
-                        .font(.headline)
-                        .foregroundColor(.gray)
+                    Text("Incomes")
                     Text(transaction.incomes.map{$0.amount}.reduce(0, +), format: .currency(code: Locale.current.currency?.identifier ?? "USD"))
                     //Text(String(transaction.incomes.map{$0.amount}.reduce(0, +)))
                         .fontWeight(.bold)
                 }
+
             }
-            .padding(.bottom)
-            
-            VStack{
+            /*
+            HStack{
                 Text(transaction.expenses.map{$0.amount}.reduce(0, +), format: .currency(code: Locale.current.currency?.identifier ?? "USD"))
                 //Text(String(transaction.expenses.map{$0.amount}.reduce(0, +)))
                     .fontWeight(.bold)
@@ -50,7 +62,7 @@ struct Dashboard: View {
                     .font(.headline)
                     .foregroundColor(.gray)
             }
-            
+            */
             Spacer()
             
             // Templetes section
@@ -65,7 +77,7 @@ struct Dashboard: View {
                         .font(.footnote)
                         .foregroundColor(.gray)
                         .fontWeight(.bold)
-                        .padding(.leading, 5)
+                        
                 }
                 
                 //Scroll templete
@@ -77,21 +89,21 @@ struct Dashboard: View {
                                 VStack(alignment: .leading){
                                     Text(income.name)
                                         .fontWeight(.bold)
-                                    Text(income.date)
+                                    Text("\(income.date.formatted(.dateTime.month().day().year()))")
                                         .font(.subheadline)
                                         .foregroundColor(.gray)
                                 }
-                                .padding(.bottom, 5)
+                                .padding(.bottom, 0)
                                 
                                 HStack {
                                     Text("Paid")
                                         .font(.callout)
-                                        .padding(.trailing, 10)
+                                        .padding(.trailing, 0)
                                     Text(income.amount, format: .currency(code: Locale.current.currency?.identifier ?? "USD"))
                                     //Text(String(income.amount))
                                         .fontWeight(.bold)
                                 }
-                                .padding(.vertical, 5)
+                                .padding(.vertical, 0)
                                 .padding(.horizontal, 7)
                                 .background(Color("OrangePrimary"))
                                 .cornerRadius(10)
@@ -103,7 +115,7 @@ struct Dashboard: View {
                         }
                     }
                 }
-                .frame(height: 150)
+                
                 //Scroll templete
                 ScrollView(.horizontal, showsIndicators: false) {
                     LazyHStack {
@@ -113,20 +125,20 @@ struct Dashboard: View {
                                 VStack(alignment: .leading){
                                     Text(expense.name)
                                         .fontWeight(.bold)
-                                    Text(expense.date)
+                                    Text("\(expense.date.formatted(.dateTime.month().day().year()))")
                                         .font(.subheadline)
                                         .foregroundColor(.gray)
                                 }
-                                .padding(.bottom, 5)
+                                .padding(.bottom, 0)
                                 
                                 HStack {
                                     Text("Paid")
                                         .font(.callout)
-                                        .padding(.trailing, 10)
+                                        .padding(.trailing, 0)
                                     Text(expense.amount, format: .currency(code: Locale.current.currency?.identifier ?? "USD"))
                                         .fontWeight(.bold)
                                 }
-                                .padding(.vertical, 5)
+                                .padding(.vertical, 0)
                                 .padding(.horizontal, 7)
                                 .background(Color("OrangePrimary"))
                                 .cornerRadius(10)
@@ -138,16 +150,9 @@ struct Dashboard: View {
                         }
                     }
                 }
-                .frame(height: 150)
             }
             .padding(.leading, 5)
         }
-        .frame(maxHeight: .infinity, alignment: .top)
-    }
-}
-
-struct Dashboard_Previews: PreviewProvider {
-    static var previews: some View {
-        Dashboard()
+        
     }
 }

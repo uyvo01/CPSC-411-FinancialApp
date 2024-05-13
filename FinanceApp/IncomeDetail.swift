@@ -8,23 +8,18 @@
 import SwiftUI
 
 struct IncomeDetail: View {
-    @EnvironmentObject var transaction: TransactionManager
+    @EnvironmentObject var t: TransactionManager
     
     var body: some View {
         // Top Filter scrollview
         VStack {
-            ScrollView(.horizontal, showsIndicators: false) {
-                LazyHStack {
-                    ForEach(filters, id: \.self) { item in
-                        FilterView(title: item)
-                    }
-                }
+            VStack(alignment: .center){
+                Text("Finanace App")
+                    .font(.title)
+                    .fontWeight(.bold)
+                Divider()
+
             }
-            .frame(height: 50)
-            .padding(.bottom, 5)
-            
-            // Templetes section
-            
             VStack(alignment: .leading) {
                 
                 HStack(alignment: .firstTextBaseline) {
@@ -32,49 +27,65 @@ struct IncomeDetail: View {
                         .font(.title2)
                         .fontWeight(.bold)
                 }
+            }.padding(.bottom,0)
+            //Pie Chart Section
+            ZStack(alignment: .center) {
+                
+                if #available(iOS 17.0, *) {
+                    CircularIncomeDetail()
+                        .frame(width: 200, height: 200)
+                } else {
+                    // Fallback on earlier versions
+                    Text("support by iOS 17.0")
+                }
             }
-            
-            //Scroll templete
-            
-            ScrollView(.vertical, showsIndicators: false) {
-                VStack {
-                    ForEach(transaction.incomes, id: \.id) {
+            VStack {
+                EditButton()
+                List {
+                    ForEach(t.incomes, id: \.id) {
                         income in
-                        VStack {
-                            HStack(alignment: .center){
-                                Text(income.date)
+                        VStack(alignment: .leading) {
+                            HStack(alignment: .top){
+                                Text("\(income.date.formatted(.dateTime.month().day().year()))")
                                     .font(.subheadline)
                                     .foregroundColor(.red)
                                     .fontWeight(.bold)
                             }
                             .padding(.bottom, 0)
-                            
+                            HStack {
+                                Text("Category: ")
+                                    .font(.system(size:14))
+                                Text(income.category)
+                                    .fontWeight(.bold)
+                                    .font(.system(size:14))
+                            }
                             HStack {
                                 Text(income.name)
                                     .fontWeight(.bold)
-                                
+                                    .font(.system(size:14))
                                 Text(income.amount, format: .currency(code: Locale.current.currency?.identifier ?? "USD"))
-                                //Text(String(income.amount))
-                                    .fontWeight(.bold)
+                                    .font(.system(size:14))
+                                    .fontWeight(.regular)
+                                Spacer()
                             }
-                            .padding(.vertical, 10)
-                            .padding(.horizontal, 7)
-                            .background(Color("OrangePrimary"))
-                            .cornerRadius(10)
-                            
                         }
-                        .padding(5)
-                        .background(Color("BlueSecondary"))
-                        .cornerRadius(15)
                         .frame(
                             maxWidth: .infinity,
                             alignment: .topLeading
                         )
-                    }.frame(maxWidth: .infinity)
-                }.frame(maxWidth: .infinity)
+                    }.onDelete {
+                        offset in
+                        t.incomes.remove(atOffsets: offset)
+                    }
+                    .onMove {
+                        offset, index in
+                        t.incomes.move(fromOffsets: offset,
+                                       toOffset: index)
+                    }
+                }
             }
-            .padding(.leading, 0)
-            .frame(maxWidth: .infinity)
+            .padding(.top)
+            
             // Button add income
             NavigationLink(destination: AddIncome()) {
                 Text("Add income")
@@ -83,7 +94,6 @@ struct IncomeDetail: View {
             }
             Spacer()
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
     }
 }
 

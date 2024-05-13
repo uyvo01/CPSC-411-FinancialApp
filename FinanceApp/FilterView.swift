@@ -9,6 +9,7 @@ import SwiftUI
 
 struct FilterView: View {
     @State var isSelected: Bool = false
+    
     let title: String
     
     var body: some View {
@@ -21,6 +22,7 @@ struct FilterView: View {
             .cornerRadius(10)
             .onTapGesture {
                 isSelected = !isSelected
+                
             }
     }
 }

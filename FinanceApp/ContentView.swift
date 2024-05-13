@@ -16,10 +16,15 @@ struct ContentView: View {
         NavigationStack {
             ZStack {
                 TabView {
-                    Dashboard()
-                        .tabItem {
-                            Image(systemName: "house")
-                        }
+                    if #available(iOS 17.0, *) {
+                        Dashboard()
+                            .tabItem {
+                                Image(systemName: "house")
+                            }
+                    } else {
+                        // Fallback on earlier versions
+                        Text("This feature is available on iOS 17.0")
+                    }
                     IncomeDetail()
                         .tabItem {
                             Image(systemName: "plus")
@@ -36,6 +41,7 @@ struct ContentView: View {
                 .padding(.horizontal)
                 .accentColor(.black)
             }
+            /*
             .toolbar {
                 ToolbarItem(placement: .principal) {
                     Text("My Finance")
@@ -48,9 +54,10 @@ struct ContentView: View {
                     Image(systemName: "ellipsis")
                         .font(.system(size: 20))
                         .rotationEffect(.degrees(-90))
-                        .padding(.bottom,0)
+                        .padding(.bottom,10)
                 }
             }
+             */
         }
         .environmentObject(transaction)
     }
